@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import "../stylesheets/App.css";
 
 const AddTransaction = ({ addTransactionFun }) => {
+  // State declarations using useState
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
 
+  // Event handler to update state when inputs change
   const handleChange = (evt) => {
     const { name, value } = evt.target;
     switch (name) {
@@ -28,8 +30,10 @@ const AddTransaction = ({ addTransactionFun }) => {
     }
   };
 
+  // Event handler when the form is submitted
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    // Send a POST request to add the new transaction to the server
     fetch("http://localhost:8001/transactions", {
       method: "POST",
       headers: {
@@ -44,7 +48,9 @@ const AddTransaction = ({ addTransactionFun }) => {
     })
       .then((response) => response.json())
       .then((newTransaction) => {
+        // Call the 'addTransactionFun' prop to update the state with the newly added transaction
         addTransactionFun(newTransaction);
+        // Reset the form fields after successful addition of the transaction
         setDate("");
         setDescription("");
         setCategory("");
@@ -56,12 +62,14 @@ const AddTransaction = ({ addTransactionFun }) => {
     <div className="segment">
       <form className="form" onSubmit={handleSubmit}>
         <div className="inline fields">
+          {/* Input field for date */}
           <input
             type="date"
             name="date"
             value={date}
             onChange={handleChange}
           />
+          {/* Input field for description */}
           <input
             type="text"
             name="description"
@@ -69,6 +77,7 @@ const AddTransaction = ({ addTransactionFun }) => {
             value={description}
             onChange={handleChange}
           />
+          {/* Input field for category */}
           <input
             type="text"
             name="category"
@@ -76,6 +85,7 @@ const AddTransaction = ({ addTransactionFun }) => {
             value={category}
             onChange={handleChange}
           />
+          {/* Input field for amount */}
           <input
             type="number"
             name="amount"
@@ -85,6 +95,7 @@ const AddTransaction = ({ addTransactionFun }) => {
             onChange={handleChange}
           />
         </div>
+        {/* Submit button */}
         <button className="button" type="submit">
           Add Transaction
         </button>
@@ -93,6 +104,7 @@ const AddTransaction = ({ addTransactionFun }) => {
   );
 };
 
+// Prop types for the 'addTransactionFun' prop
 AddTransaction.propTypes = {
   addTransactionFun: PropTypes.func.isRequired,
 };

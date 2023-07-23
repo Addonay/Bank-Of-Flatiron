@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Select from "./Select.js";
 import Transaction from "./Transaction";
-
 import "../stylesheets/App.css";
 
 const Transactionlist = (props) => {
+  // Destructuring the props object to extract the required props
   const { transactions, select, selectFun, deleteTransactionFun } = props;
 
+  // Creating an array of Transaction components based on the 'transactions' prop
   const transactionComponents = transactions.map((transactionObj) => (
     <Transaction
       key={transactionObj.id}
@@ -16,6 +17,7 @@ const Transactionlist = (props) => {
     />
   ));
 
+ // Rendering the table
   return (
     <table className="table">
       <tbody>
