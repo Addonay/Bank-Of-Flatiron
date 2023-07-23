@@ -1,18 +1,20 @@
 import React from "react";
+import PropTypes from "prop-types";
+import Select from "./Select.js";
 import Transaction from "./Transaction";
-import Select from "./Select"
+
 import "../stylesheets/App.css";
 
 const Transactionlist = (props) => {
+  const { transactions, select, selectFun, deleteTransactionFun } = props;
 
-  let componentArray = props.transactions.map(transactionObj => {
-    return <Transaction 
-            key={transactionObj.id} 
-            transaction={transactionObj} 
-            deleteTransactionFun={props.deleteTransactionFun}
-          />
-  })
-
+  const transactionComponents = transactions.map((transactionObj) => (
+    <Transaction
+      key={transactionObj.id}
+      transaction={transactionObj}
+      deleteTransactionFun={deleteTransactionFun}
+    />
+  ));
 
   return (
     <table className="table">
@@ -23,7 +25,6 @@ const Transactionlist = (props) => {
           </th>
           <th>
             <h3>Description</h3>
-            
           </th>
           <th>
             <h3>Category</h3>
@@ -32,13 +33,26 @@ const Transactionlist = (props) => {
             <h3>Amount</h3>
           </th>
         </tr>
-        
-        {componentArray}
+        {transactionComponents}
       </tbody>
-      < Select select={props.select} selectFun={props.selectFun}/>
+      <Select select={select} selectFun={selectFun} />
     </table>
-    
   );
+};
+
+Transactionlist.propTypes = {
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  select: PropTypes.string.isRequired,
+  selectFun: PropTypes.func.isRequired,
+  deleteTransactionFun: PropTypes.func.isRequired,
 };
 
 export default Transactionlist;
