@@ -4,6 +4,7 @@
   "description": "This is an app used to make transactions within the Bank of Flatiron.",
   "main": "index.js",
   "dependencies": {
+    "prop-types": "^15.8.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "1.1.4"
