@@ -9,8 +9,6 @@ const Select = (props) => {
         props.selectFun(evt.target.value)
     }
 
-     
-
   return (
    <div>
      <select value={props.select} onChange={handleSelect}>
