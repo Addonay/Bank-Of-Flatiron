@@ -5,12 +5,11 @@ import AddTransaction from "./AddTransaction";
 import "../stylesheets/App.css";
 
 const Account = () => {
-  // State declarations using useState
   const [transactions, setTransactions] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredTransactions, setFilteredTransactions] = useState([]);
 
-  // useEffect hook to fetch transactions from the server when the component mounts
+  // Fetch transactions from the server when the component mounts
   useEffect(() => {
     fetch("http://localhost:8001/transactions")
       .then((response) => response.json())
@@ -20,7 +19,7 @@ const Account = () => {
       });
   }, []);
 
-  // useEffect hook to update filteredTransactions whenever search or transactions change
+  // Update filteredTransactions whenever search or transactions change
   useEffect(() => {
     // Filter transactions based on search text
     const filteredData = transactions.filter((transaction) => {
@@ -33,7 +32,14 @@ const Account = () => {
 
   // Function to add a new transaction to the state
   const addTransaction = (newTransaction) => {
+    // Update transactions state with the newly added transaction
     setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
+
+    // Update filteredTransactions state to include the new transaction if it matches the search
+    const newFilteredTransactions = [...filteredTransactions, newTransaction];
+    if (newTransaction.description.toLowerCase().includes(search.toLowerCase())) {
+      setFilteredTransactions(newFilteredTransactions);
+    }
   };
 
   // Function to delete a transaction from the state
@@ -41,9 +47,14 @@ const Account = () => {
     setTransactions((prevTransactions) =>
       prevTransactions.filter((transaction) => transaction.id !== deletedTransaction.id)
     );
+
+    // Update filteredTransactions state to exclude the deleted transaction
+    const newFilteredTransactions = filteredTransactions.filter(
+      (transaction) => transaction.id !== deletedTransaction.id
+    );
+    setFilteredTransactions(newFilteredTransactions);
   };
 
-  // Rendering the components with appropriate comments
   return (
     <div>
       {/* Search component to input search text and update 'search' state */}
@@ -52,7 +63,8 @@ const Account = () => {
       {/* AddTransaction component to add new transactions and call 'addTransaction' function */}
       <AddTransaction addTransactionFun={addTransaction} />
 
-      {/* Transactionlist component to display transactions based on filtered data, and allow the user to delete transactions with the 'deleteTransaction' function */}
+      {/* Transactionlist component to display transactions based on filtered data,
+        and allow the user to delete transactions with the 'deleteTransaction' function */}
       <Transactionlist
         transactions={filteredTransactions}
         deleteTransactionFun={deleteTransaction}

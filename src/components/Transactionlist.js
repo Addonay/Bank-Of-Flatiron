@@ -17,7 +17,7 @@ const Transactionlist = (props) => {
     />
   ));
 
- // Rendering the table
+  // Rendering the table containing the list of transactions and the Select component
   return (
     <table className="table">
       <tbody>
@@ -35,13 +35,16 @@ const Transactionlist = (props) => {
             <h3>Amount</h3>
           </th>
         </tr>
+        {/* Rendering the Transaction components */}
         {transactionComponents}
       </tbody>
+      {/* Rendering the Select component to provide sorting options */}
       <Select select={select} selectFun={selectFun} />
     </table>
   );
 };
 
+// Prop types for the 'transactions', 'select', 'selectFun', and 'deleteTransactionFun' props
 Transactionlist.propTypes = {
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
