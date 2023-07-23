@@ -1,0 +1,224 @@
+*{
+box-sizing: border-box;
+text-align: center;
+}
+
+.search.input {
+  position: relative;
+}
+
+.search.input input {
+  width: 100%;
+  padding: 0.8rem 2.5rem 0.8rem 0.8rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: left;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.App {
+text-align: center;
+}
+ 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background-color:rgb(0, 25, 134);
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.transaction-table th {
+  background-color: #f1f1f1;
+}
+
+.transaction-row:hover {
+  background-color: #f9f9f9;
+}
+
+.select-dropdown {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  margin-bottom: 1rem;
+}
+
+.primary-btn {
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: #ffffff;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.transaction-list {
+  margin-bottom: 2rem;
+}
+
+.transaction-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.transaction-controls select,
+.transaction-controls input {
+  width: 50%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.transaction-controls select {
+  background-color: #fff;
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f1f1f1;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.action-buttons button {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 0.5rem;
+}
+
+.action-buttons button:last-child {
+  margin-right: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.inline.fields {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.inline.fields input[type="date"] {
+  font-size: 15px;
+}
+
+.inline.fields input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+
+.inline.fields input[type="text"],
+.inline.fields input[type="number"] {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 200px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
