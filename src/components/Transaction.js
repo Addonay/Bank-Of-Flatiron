@@ -1,18 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Transaction = (props) => {
+const Transaction = ({ transaction, deleteTransactionFun }) => {
+  const { date, description, category, amount } = transaction;
 
-  let {date, description, category, amount} = props.transaction
-
-  let handledelete = (evt) => {
-    fetch(`http://localhost:8001/transactions/${props.transaction.id}`, {
-      method: 'DELETE',
+  const handleDelete = () => {
+    fetch(`http://localhost:8001/transactions/${transaction.id}`, {
+      method: "DELETE",
     })
-    .then(r => r.json())
-    .then(deletedTransaction => {
-      props.deleteTransactionFun(props.transaction)
-    })
-  }
+      .then((response) => response.json())
+      .then((deletedTransaction) => {
+        deleteTransactionFun(transaction);
+      })
+      .catch((error) => {
+        console.error("Error deleting transaction:", error);
+      });
+  };
 
   return (
     <tr>
@@ -20,9 +23,22 @@ const Transaction = (props) => {
       <td>{description}</td>
       <td>{category}</td>
       <td>{amount}</td>
-      <td><button onClick={handledelete}>X</button></td> 
+      <td>
+        <button onClick={handleDelete}>X</button>
+      </td>
     </tr>
   );
+};
+
+Transaction.propTypes = {
+  transaction: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+  }).isRequired,
+  deleteTransactionFun: PropTypes.func.isRequired,
 };
 
 export default Transaction;
