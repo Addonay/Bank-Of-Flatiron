@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Transactionlist from "./Transactionlist";
 import Search from "./Search";
 import AddTransaction from "./AddTransaction";
+import Select from "./Select";
 import "../stylesheets/App.css";
 
 const filterTransactions = (transactions, search, select) => {
@@ -46,6 +47,7 @@ const filterTransactions = (transactions, search, select) => {
 const Account = () => {
   const [transactions, setTransactions] = useState([]);
   const [search, setSearch] = useState("");
+  const [select, setSelect] = useState("all");
   const [filteredTransactions, setFilteredTransactions] = useState([]);
 
   useEffect(() => {
@@ -58,9 +60,8 @@ const Account = () => {
   }, []);
 
   useEffect(() => {
-    const sortedTransactions = filterTransactions(transactions, search,);
-    setFilteredTransactions(sortedTransactions);
-  }, [search, transactions]);
+    setFilteredTransactions(filterTransactions(transactions, search, select));
+  }, [search, select, transactions]);
 
   const addTransaction = (newTransaction) => {
     setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
@@ -80,6 +81,7 @@ const Account = () => {
         transactions={filteredTransactions}
         deleteTransactionFun={deleteTransaction}
       />
+      <Select select={select} selectFun={setSelect} />
     </div>
   );
 };
