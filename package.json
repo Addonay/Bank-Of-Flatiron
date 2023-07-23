@@ -1,0 +1,39 @@
+{
+  "name": "bank-of-flatiron",
+  "version": "1.0.0",
+  "description": "This is an app used to make transactions within the Bank of Flatiron.",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "json-server --watch db.json -p 8001  & PORT=8001 react-scripts start && fg",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Addonay/Bank-Of-Flatiron.git"
+  },
+  "author": "Addonay Osoro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Addonay/Bank-Of-Flatiron/issues"
+  },
+  "homepage": "https://github.com/Addonay/Bank-Of-Flatiron#readme"
+}
