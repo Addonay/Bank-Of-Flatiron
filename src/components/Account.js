@@ -46,7 +46,6 @@ const filterTransactions = (transactions, search, select) => {
 const Account = () => {
   const [transactions, setTransactions] = useState([]);
   const [search, setSearch] = useState("");
-  const [select, setSelect] = useState("all");
   const [filteredTransactions, setFilteredTransactions] = useState([]);
 
   useEffect(() => {
@@ -59,8 +58,9 @@ const Account = () => {
   }, []);
 
   useEffect(() => {
-    setFilteredTransactions(filterTransactions(transactions, search, select));
-  }, [search, select, transactions]);
+    const sortedTransactions = filterTransactions(transactions, search,);
+    setFilteredTransactions(sortedTransactions);
+  }, [search, transactions]);
 
   const addTransaction = (newTransaction) => {
     setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
@@ -78,8 +78,6 @@ const Account = () => {
       <AddTransaction addTransactionFun={addTransaction} />
       <Transactionlist
         transactions={filteredTransactions}
-        select={select}
-        onSelect={setSelect}
         deleteTransactionFun={deleteTransaction}
       />
     </div>
