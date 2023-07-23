@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "../stylesheets/App.css";
 
 const AddTransaction = ({ addTransactionFun }) => {
@@ -90,6 +91,10 @@ const AddTransaction = ({ addTransactionFun }) => {
       </form>
     </div>
   );
+};
+
+AddTransaction.propTypes = {
+  addTransactionFun: PropTypes.func.isRequired,
 };
 
 export default AddTransaction;
