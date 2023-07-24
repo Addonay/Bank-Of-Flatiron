@@ -4,15 +4,29 @@ import Select from "./Select";
 import Transaction from "./Transaction";
 import "../stylesheets/App.css";
 
-const Transactionlist = (props) => {
-  const { transactions, select, selectFun, deleteTransactionFun } = props;
+const Transactionlist = ({ transactions, select, selectFun, deleteTransactionFun }) => {
+  // Function to handle deleting a transaction
+  const handleDeleteTransaction = (deletedTransaction) => {
+    // Send a DELETE request to the server to remove the transaction
+    fetch(`http://localhost:8001/transactions/${deletedTransaction.id}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then(() => {
+        // Update the local state by calling 'deleteTransactionFun' with the deleted transaction
+        deleteTransactionFun(deletedTransaction);
+      })
+      .catch((error) => {
+        console.error("Error deleting transaction:", error);
+      });
+  };
 
   // Creating an array of Transaction components based on the 'transactions' prop
   const transactionComponents = transactions.map((transactionObj) => (
     <Transaction
       key={transactionObj.id}
       transaction={transactionObj}
-      deleteTransactionFun={deleteTransactionFun}
+      deleteTransactionFun={handleDeleteTransaction}
     />
   ));
 
@@ -33,13 +47,13 @@ const Transactionlist = (props) => {
         {transactionComponents}
       </tbody>
       {/* Rendering the Select component to provide sorting options */}
-      <tfoot>
+      <thead>
         <tr>
           <td colSpan="5">
             <Select select={select} selectFun={selectFun} />
           </td>
         </tr>
-      </tfoot>
+      </thead>
     </table>
   );
 };

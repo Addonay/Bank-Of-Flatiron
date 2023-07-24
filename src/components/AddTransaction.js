@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "../stylesheets/App.css";
 
@@ -7,6 +7,9 @@ const AddTransaction = ({ addTransactionFun }) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
+
+  // State variable to track if the button should be disabled
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   // Function to handle changes in the input fields
   const handleChange = (evt) => {
@@ -33,32 +36,28 @@ const AddTransaction = ({ addTransactionFun }) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // Send the new transaction data to the server
-    fetch("http://localhost:8001/transactions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        date,
-        description,
-        category,
-        amount,
-      }),
-    })
-      .then((response) => response.json())
-      .then((newTransaction) => {
-        // Call the 'addTransactionFun' prop with the new transaction data
-        addTransactionFun(newTransaction);
-        // Reset the input fields after successful addition
-        setDate("");
-        setDescription("");
-        setCategory("");
-        setAmount("");
-      })
-      .catch((error) => {
-        console.error("Error adding transaction:", error);
-      });
+    const newTransaction = {
+      date,
+      description,
+      category,
+      amount: parseFloat(amount),
+    };
+    addTransactionFun(newTransaction);
+    // Reset the input fields after successful addition
+    setDate("");
+    setDescription("");
+    setCategory("");
+    setAmount("");
   };
+
+  // Function to check if any input field is empty and update the button disabled state
+  useEffect(() => {
+    if (date.trim() === "" || description.trim() === "" || category.trim() === "" || amount.trim() === "") {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
+    }
+  }, [date, description, category, amount]);
 
   return (
     <div className="segment">
@@ -93,7 +92,7 @@ const AddTransaction = ({ addTransactionFun }) => {
             onChange={handleChange}
           />
         </div>
-        <button className="primary-btn" type="submit">
+        <button className="primary-btn" type="submit" disabled={isButtonDisabled}>
           Add Transaction
         </button>
       </form>
