@@ -3,18 +3,16 @@ import PropTypes from "prop-types";
 
 const Transaction = ({ transaction, deleteTransactionFun }) => {
   const handleDelete = () => {
-    // Call the deleteTransactionFun prop with the transaction data to delete it
-    deleteTransactionFun(transaction);
+    // Call the deleteTransactionFun prop with the transaction id to delete it
+    deleteTransactionFun(transaction.id);
   };
 
   return (
     <tr>
-      {/* Display the transaction details in table cells */}
       <td>{transaction.date}</td>
       <td>{transaction.description}</td>
       <td>{transaction.category}</td>
       <td>{transaction.amount}</td>
-      {/* Add the delete button with the handleDelete function */}
       <td>
         <button onClick={handleDelete}>Delete</button>
       </td>

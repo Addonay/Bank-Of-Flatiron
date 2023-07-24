@@ -14,7 +14,6 @@ const Account = () => {
     fetch("db.json")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setTransactions(data.transactions);
         setFilteredTransactions(data.transactions); // Initialize filteredTransactions with all transactions
       })
@@ -23,7 +22,7 @@ const Account = () => {
       });
   }, []);
 
-  // Update filteredTransactions whenever search or transactions change
+  // Function to update filteredTransactions based on search text
   useEffect(() => {
     // Filter transactions based on search text
     const filteredData = transactions.filter((transaction) => {
@@ -36,27 +35,31 @@ const Account = () => {
 
   // Function to add a new transaction to the state
   const addTransaction = (newTransaction) => {
+    // Generate a unique id for the new transaction
+    const newId = Math.max(...transactions.map((transaction) => transaction.id)) + 1;
+    const transactionWithId = { ...newTransaction, id: newId };
+
     // Update transactions state with the newly added transaction
-    setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
+    setTransactions((prevTransactions) => [...prevTransactions, transactionWithId]);
 
     // Update filteredTransactions state to include the new transaction if it matches the search
-    if (newTransaction.description.toLowerCase().includes(search.toLowerCase())) {
+    if (transactionWithId.description.toLowerCase().includes(search.toLowerCase())) {
       setFilteredTransactions((prevFilteredTransactions) => [
         ...prevFilteredTransactions,
-        newTransaction,
+        transactionWithId,
       ]);
     }
   };
 
   // Function to delete a transaction from the state
-  const deleteTransaction = (deletedTransaction) => {
+  const deleteTransaction = (transactionId) => {
     setTransactions((prevTransactions) =>
-      prevTransactions.filter((transaction) => transaction.id !== deletedTransaction.id)
+      prevTransactions.filter((transaction) => transaction.id !== transactionId)
     );
 
     // Update filteredTransactions state to exclude the deleted transaction
     setFilteredTransactions((prevFilteredTransactions) =>
-      prevFilteredTransactions.filter((transaction) => transaction.id !== deletedTransaction.id)
+      prevFilteredTransactions.filter((transaction) => transaction.id !== transactionId)
     );
   };
 
