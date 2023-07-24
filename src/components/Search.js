@@ -19,9 +19,7 @@ const Search = (props) => {
         onChange={handleChange}
       />
       {/* Search icon */}
-      <i className="search-icon">
-        <img src="public/icons8-search-26.png" alt="Search Icon" />
-      </i>
+      <i className="search-icon"></i>
     </div>
   );
 };

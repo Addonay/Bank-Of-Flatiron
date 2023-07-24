@@ -1,24 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Transaction = ({ transaction, deleteTransactionFun }) => {
+const Transaction = ({ transaction, onDeleteTransaction }) => {
   // Destructuring the properties from the 'transaction' object
-  const { date, description, category, amount } = transaction;
+  const { id, date, description, category, amount } = transaction;
 
   // Event handler to delete the transaction
   const handleDelete = () => {
-    // Send a DELETE request to the server to delete the transaction
-    fetch(`http://localhost:8001/transactions/${transaction.id}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((deletedTransaction) => {
-        // Call the 'deleteTransactionFun' prop to update the state in the parent component
-        deleteTransactionFun(transaction);
-      })
-      .catch((error) => {
-        console.error("Error deleting transaction:", error);
-      });
+    // Call the 'onDeleteTransaction' prop with the 'id' of the transaction to be deleted
+    onDeleteTransaction(id);
   };
 
   return (
@@ -30,13 +20,13 @@ const Transaction = ({ transaction, deleteTransactionFun }) => {
       <td>{amount}</td>
       {/* Delete button */}
       <td>
-        <button onClick={handleDelete}>X</button>
+        <button onClick={handleDelete}>Delete</button>
       </td>
     </tr>
   );
 };
 
-// Prop types for the 'transaction' and 'deleteTransactionFun' props
+// Prop types for the 'transaction' and 'onDeleteTransaction' props
 Transaction.propTypes = {
   transaction: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -45,7 +35,7 @@ Transaction.propTypes = {
     category: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
   }).isRequired,
-  deleteTransactionFun: PropTypes.func.isRequired,
+  onDeleteTransaction: PropTypes.func.isRequired,
 };
 
 export default Transaction;
