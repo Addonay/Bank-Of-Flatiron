@@ -36,9 +36,11 @@ const Account = () => {
     setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
 
     // Update filteredTransactions state to include the new transaction if it matches the search
-    const newFilteredTransactions = [...filteredTransactions, newTransaction];
     if (newTransaction.description.toLowerCase().includes(search.toLowerCase())) {
-      setFilteredTransactions(newFilteredTransactions);
+      setFilteredTransactions((prevFilteredTransactions) => [
+        ...prevFilteredTransactions,
+        newTransaction,
+      ]);
     }
   };
 
@@ -49,10 +51,9 @@ const Account = () => {
     );
 
     // Update filteredTransactions state to exclude the deleted transaction
-    const newFilteredTransactions = filteredTransactions.filter(
-      (transaction) => transaction.id !== deletedTransaction.id
+    setFilteredTransactions((prevFilteredTransactions) =>
+      prevFilteredTransactions.filter((transaction) => transaction.id !== deletedTransaction.id)
     );
-    setFilteredTransactions(newFilteredTransactions);
   };
 
   return (

@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Select from "./Select.js";
+import Select from "./Select";
 import Transaction from "./Transaction";
 import "../stylesheets/App.css";
 
 const Transactionlist = (props) => {
-  // Destructuring the props object to extract the required props
   const { transactions, select, selectFun, deleteTransactionFun } = props;
 
   // Creating an array of Transaction components based on the 'transactions' prop
@@ -19,27 +18,28 @@ const Transactionlist = (props) => {
 
   // Rendering the table containing the list of transactions and the Select component
   return (
-    <table className="table">
-      <tbody>
+    <table className="transaction-table">
+      <thead>
         <tr>
-          <th>
-            <h3>Date</h3>
-          </th>
-          <th>
-            <h3>Description</h3>
-          </th>
-          <th>
-            <h3>Category</h3>
-          </th>
-          <th>
-            <h3>Amount</h3>
-          </th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Action</th>
         </tr>
+      </thead>
+      <tbody>
         {/* Rendering the Transaction components */}
         {transactionComponents}
       </tbody>
       {/* Rendering the Select component to provide sorting options */}
-      <Select select={select} selectFun={selectFun} />
+      <tfoot>
+        <tr>
+          <td colSpan="5">
+            <Select select={select} selectFun={selectFun} />
+          </td>
+        </tr>
+      </tfoot>
     </table>
   );
 };
