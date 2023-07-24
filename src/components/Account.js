@@ -9,13 +9,14 @@ const Account = () => {
   const [search, setSearch] = useState("");
   const [filteredTransactions, setFilteredTransactions] = useState([]);
 
-  // Fetch transactions from the server when the component mounts
   useEffect(() => {
-    fetch("http://localhost:8001/transactions")
+    // Fetch transactions from db.json when the component mounts
+    fetch("db.json")
       .then((response) => response.json())
       .then((data) => {
-        setTransactions(data);
-        setFilteredTransactions(data); // Initialize filteredTransactions with all transactions
+        console.log(data);
+        setTransactions(data.transactions);
+        setFilteredTransactions(data.transactions); // Initialize filteredTransactions with all transactions
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);

@@ -10,7 +10,7 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "json-server --watch db.json -p 8001  & PORT=8001 react-scripts start && fg",
+    "start": "concurrently \"json-server --watch db.json -p 8001\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -36,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/Addonay/Bank-Of-Flatiron/issues"
   },
-  "homepage": "https://github.com/Addonay/Bank-Of-Flatiron#readme"
+  "homepage": "https://github.com/Addonay/Bank-Of-Flatiron#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
 }
