@@ -22,7 +22,6 @@ const Account = () => {
       });
   }, []);
 
-  // Function to update filteredTransactions based on search text
   useEffect(() => {
     // Filter transactions based on search text
     const filteredData = transactions.filter((transaction) => {
@@ -33,16 +32,12 @@ const Account = () => {
     setFilteredTransactions(filteredData);
   }, [search, transactions]);
 
-  // Function to add a new transaction to the state
   const addTransaction = (newTransaction) => {
-    // Generate a unique id for the new transaction
     const newId = Math.max(...transactions.map((transaction) => transaction.id)) + 1;
     const transactionWithId = { ...newTransaction, id: newId };
 
-    // Update transactions state with the newly added transaction
     setTransactions((prevTransactions) => [...prevTransactions, transactionWithId]);
 
-    // Update filteredTransactions state to include the new transaction if it matches the search
     if (transactionWithId.description.toLowerCase().includes(search.toLowerCase())) {
       setFilteredTransactions((prevFilteredTransactions) => [
         ...prevFilteredTransactions,
@@ -51,31 +46,64 @@ const Account = () => {
     }
   };
 
-  // Function to delete a transaction from the state
   const deleteTransaction = (transactionId) => {
     setTransactions((prevTransactions) =>
       prevTransactions.filter((transaction) => transaction.id !== transactionId)
     );
 
-    // Update filteredTransactions state to exclude the deleted transaction
     setFilteredTransactions((prevFilteredTransactions) =>
       prevFilteredTransactions.filter((transaction) => transaction.id !== transactionId)
     );
   };
 
+  const handleSelect = (option) => {
+    switch (option) {
+      case "descriptionUP":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => a.description.localeCompare(b.description)));
+        break;
+      case "descriptionDOWN":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => b.description.localeCompare(a.description)));
+        break;
+      case "categoryUP":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => a.category.localeCompare(b.category)));
+        break;
+      case "categoryDOWN":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => b.category.localeCompare(a.category)));
+        break;
+      case "amountUP":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => a.amount - b.amount));
+        break;
+      case "amountDOWN":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => b.amount - a.amount));
+        break;
+      case "dateUP":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => new Date(a.date) - new Date(b.date)));
+        break;
+      case "dateDOWN":
+        setFilteredTransactions([...filteredTransactions].sort((a, b) => new Date(b.date) - new Date(a.date)));
+        break;
+      default:
+        // If the option is "all" or invalid, set the transactions as they are
+        setFilteredTransactions([...transactions]);
+        break;
+    }
+  };
+  
+
   return (
     <div>
-      {/* Search component to input search text and update 'search' state */}
+      {/* Search component */}
       <Search searchValue={search} searchFun={setSearch} />
 
-      {/* AddTransaction component to add new transactions and call 'addTransaction' function */}
+      {/* AddTransaction component */}
       <AddTransaction addTransactionFun={addTransaction} />
 
-      {/* Transactionlist component to display transactions based on filtered data,
-        and allow the user to delete transactions with the 'deleteTransaction' function */}
+      {/* Transactionlist component */}
       <Transactionlist
         transactions={filteredTransactions}
         deleteTransactionFun={deleteTransaction}
+        select={""} // Provide an initial value for the 'select' prop
+        selectFun={handleSelect} // Provide the function for handling sorting option selection
       />
     </div>
   );

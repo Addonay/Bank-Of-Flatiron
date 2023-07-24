@@ -1,6 +1,7 @@
 {
   "name": "bank-of-flatiron",
   "version": "1.0.0",
+  "private": true,
   "description": "This is an app used to make transactions within the Bank of Flatiron.",
   "main": "index.js",
   "dependencies": {
@@ -11,7 +12,7 @@
     "http-proxy-middleware": "^1.5.2"
   },
   "scripts": {
-    "start": "json-server --watch db.json --port 8001 & react-scripts start",
+    "start": "json-server --watch db.json -p 8001  & PORT=8001 react-scripts start && fg",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
