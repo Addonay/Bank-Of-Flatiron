@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Select from "./Select";
 import Transaction from "./Transaction";
 import "../stylesheets/App.css";
 
@@ -17,7 +16,6 @@ const Transactionlist = ({ transactions, select, selectFun, deleteTransactionFun
         </tr>
       </thead>
       <tbody>
-        {/* Rendering the Transaction components */}
         {transactions.map((transactionObj) => (
           <Transaction
             key={transactionObj.id}
@@ -30,7 +28,17 @@ const Transactionlist = ({ transactions, select, selectFun, deleteTransactionFun
         <tr>
           <td colSpan="5">
             {/* Rendering the Select component to provide sorting options */}
-            <Select select={select} selectFun={selectFun} />
+            <select value={select} onChange={selectFun}>
+              <option value={"all"}>All</option>
+              <option value={"descriptionUP"}>Sort by description (ASC)</option>
+              <option value={"descriptionDOWN"}>Sort by description (DESC)</option>
+              <option value={"categoryUP"}>Sort by category (ASC)</option>
+              <option value={"categoryDOWN"}>Sort by category (DESC)</option>
+              <option value={"amountUP"}>Sort by amount (ASC)</option>
+              <option value={"amountDOWN"}>Sort by amount (DESC)</option>
+              <option value={"dateUP"}>Sort by date (ASC)</option>
+              <option value={"dateDOWN"}>Sort by date (DESC)</option>
+            </select>
           </td>
         </tr>
       </tfoot>

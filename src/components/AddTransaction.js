@@ -32,24 +32,6 @@ const AddTransaction = ({ addTransactionFun }) => {
     }
   };
 
-  // Function to handle form submission
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    // Send the new transaction data to the server
-    const newTransaction = {
-      date,
-      description,
-      category,
-      amount: parseFloat(amount),
-    };
-    addTransactionFun(newTransaction);
-    // Reset the input fields after successful addition
-    setDate("");
-    setDescription("");
-    setCategory("");
-    setAmount("");
-  };
-
   // Function to check if any input field is empty and update the button disabled state
   useEffect(() => {
     if (date.trim() === "" || description.trim() === "" || category.trim() === "" || amount.trim() === "") {
@@ -58,6 +40,39 @@ const AddTransaction = ({ addTransactionFun }) => {
       setIsButtonDisabled(false);
     }
   }, [date, description, category, amount]);
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    // Send the new transaction data to the back-end
+    const newTransaction = {
+      date,
+      description,
+      category,
+      amount: parseFloat(amount),
+    };
+
+    // Send a POST request to the back-end to add the transaction
+    fetch("http://localhost:8001/transactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTransaction),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state to add the new transaction to the front-end
+        addTransactionFun(data);
+        // Reset the input fields after successful addition
+        setDate("");
+        setDescription("");
+        setCategory("");
+        setAmount("");
+      })
+      .catch((error) => {
+        console.error("Error adding transaction:", error);
+      });
+  }
 
   return (
     <div className="segment">
